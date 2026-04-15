@@ -1,0 +1,11 @@
+name: enzywizard-hydrocluster
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  - networkx=3.4
+  - numpy=1.23.5
+  - biopython=1.86
+  - scipy=1.15.2
+prefix: /home/wmk/miniconda3/envs/enzywizard-hydrocluster
