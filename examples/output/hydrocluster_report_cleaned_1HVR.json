@@ -1,139 +1,139 @@
 {
-  "output_type": "enzywizard_hydrocluster",
+  "report_type": "enzywizard_hydrocluster",
   "hydrophobic_cluster_statistics": {
-    "cluster_num": 3,
-    "max_cluster_area": 2862.1243499158604,
-    "total_cluster_area": 4092.833387788152
+    "hydrophobic_cluster_count": 3,
+    "max_hydrophobic_cluster_area": 2862.1243499158604,
+    "total_hydrophobic_cluster_area": 4092.833387788152
   },
-  "hydrophobic_cluster": [
+  "hydrophobic_clusters": [
     {
-      "area": 2862.1243499158604,
+      "hydrophobic_cluster_area": 2862.1243499158604,
       "residues": [
         {
-          "aa_id": 3,
-          "aa_name": "V"
+          "residue_index": 3,
+          "residue_name": "V"
         },
         {
-          "aa_id": 5,
-          "aa_name": "L"
+          "residue_index": 5,
+          "residue_name": "L"
         },
         {
-          "aa_id": 11,
-          "aa_name": "V"
+          "residue_index": 11,
+          "residue_name": "V"
         },
         {
-          "aa_id": 13,
-          "aa_name": "I"
+          "residue_index": 13,
+          "residue_name": "I"
         },
         {
-          "aa_id": 15,
-          "aa_name": "I"
+          "residue_index": 15,
+          "residue_name": "I"
         },
         {
-          "aa_id": 24,
-          "aa_name": "L"
+          "residue_index": 24,
+          "residue_name": "L"
         },
         {
-          "aa_id": 33,
-          "aa_name": "L"
+          "residue_index": 33,
+          "residue_name": "L"
         },
         {
-          "aa_id": 38,
-          "aa_name": "L"
+          "residue_index": 38,
+          "residue_name": "L"
         },
         {
-          "aa_id": 62,
-          "aa_name": "I"
+          "residue_index": 62,
+          "residue_name": "I"
         },
         {
-          "aa_id": 64,
-          "aa_name": "I"
+          "residue_index": 64,
+          "residue_name": "I"
         },
         {
-          "aa_id": 66,
-          "aa_name": "I"
+          "residue_index": 66,
+          "residue_name": "I"
         },
         {
-          "aa_id": 74,
-          "aa_name": "V"
+          "residue_index": 74,
+          "residue_name": "V"
         },
         {
-          "aa_id": 76,
-          "aa_name": "V"
+          "residue_index": 76,
+          "residue_name": "V"
         },
         {
-          "aa_id": 84,
-          "aa_name": "I"
+          "residue_index": 84,
+          "residue_name": "I"
         },
         {
-          "aa_id": 88,
-          "aa_name": "L"
+          "residue_index": 88,
+          "residue_name": "L"
         },
         {
-          "aa_id": 89,
-          "aa_name": "L"
+          "residue_index": 89,
+          "residue_name": "L"
         },
         {
-          "aa_id": 92,
-          "aa_name": "I"
+          "residue_index": 92,
+          "residue_name": "I"
         },
         {
-          "aa_id": 96,
-          "aa_name": "L"
+          "residue_index": 96,
+          "residue_name": "L"
         }
       ]
     },
     {
-      "area": 1118.3428426262533,
+      "hydrophobic_cluster_area": 1118.3428426262533,
       "residues": [
         {
-          "aa_id": 10,
-          "aa_name": "L"
+          "residue_index": 10,
+          "residue_name": "L"
         },
         {
-          "aa_id": 23,
-          "aa_name": "L"
+          "residue_index": 23,
+          "residue_name": "L"
         },
         {
-          "aa_id": 32,
-          "aa_name": "V"
+          "residue_index": 32,
+          "residue_name": "V"
         },
         {
-          "aa_id": 47,
-          "aa_name": "I"
+          "residue_index": 47,
+          "residue_name": "I"
         },
         {
-          "aa_id": 54,
-          "aa_name": "I"
+          "residue_index": 54,
+          "residue_name": "I"
         },
         {
-          "aa_id": 56,
-          "aa_name": "V"
+          "residue_index": 56,
+          "residue_name": "V"
         },
         {
-          "aa_id": 75,
-          "aa_name": "L"
+          "residue_index": 75,
+          "residue_name": "L"
         },
         {
-          "aa_id": 81,
-          "aa_name": "V"
+          "residue_index": 81,
+          "residue_name": "V"
         },
         {
-          "aa_id": 83,
-          "aa_name": "I"
+          "residue_index": 83,
+          "residue_name": "I"
         }
       ]
     },
     {
-      "area": 112.36619524603853,
+      "hydrophobic_cluster_area": 112.36619524603853,
       "residues": [
         {
-          "aa_id": 63,
-          "aa_name": "L"
+          "residue_index": 63,
+          "residue_name": "L"
         },
         {
-          "aa_id": 71,
-          "aa_name": "I"
+          "residue_index": 71,
+          "residue_name": "I"
         }
       ]
     }

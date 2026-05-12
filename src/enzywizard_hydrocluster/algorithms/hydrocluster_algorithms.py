@@ -189,8 +189,13 @@ def generate_hydrocluster_report(clusters: List[Cluster],struct: Structure,logge
             "residues": residue_dict_list,
         })
 
-    return {
+    raw_report = {
         "output_type": "enzywizard_hydrocluster",
         "hydrophobic_cluster_statistics": hydrophobic_cluster_statistics,
         "hydrophobic_cluster": hydrophobic_cluster_list,
     }
+
+    return postprocess_hydrocluster_report_to_schema(
+        raw_report=raw_report,
+        logger=logger,
+    )
