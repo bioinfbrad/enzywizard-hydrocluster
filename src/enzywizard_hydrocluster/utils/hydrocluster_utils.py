@@ -288,144 +288,40 @@ def add_clusters(g: nx.DiGraph) -> List[Cluster]:
 
 def postprocess_hydrocluster_report_to_schema(
     raw_report: Dict[str, Any],
-    logger: Logger,
-) -> Dict[str, Any] | None:
+) -> Dict[str, Any]:
     """
     Postprocess the raw EnzyWizard-Hydrocluster report into the new JSON Schema format.
-
     """
-    if not isinstance(raw_report, dict):
-        logger.print("[ERROR] raw_report must be a dictionary.")
-        return None
 
-    output_type = raw_report.get("output_type")
-    if output_type != "enzywizard_hydrocluster":
-        logger.print(
-            f"[ERROR] Invalid or missing output_type in raw hydrocluster report: {output_type}"
-        )
-        return None
-
-    raw_statistics = raw_report.get("hydrophobic_cluster_statistics")
-    if not isinstance(raw_statistics, dict):
-        logger.print("[ERROR] Missing or invalid hydrophobic_cluster_statistics in raw hydrocluster report.")
-        return None
-
-    required_statistics_fields = [
-        "cluster_num",
-        "max_cluster_area",
-        "total_cluster_area",
-    ]
-    for field in required_statistics_fields:
-        if field not in raw_statistics:
-            logger.print(f"[ERROR] Missing field in raw hydrophobic_cluster_statistics: {field}")
-            return None
-
-    cluster_num = raw_statistics["cluster_num"]
-    max_cluster_area = raw_statistics["max_cluster_area"]
-    total_cluster_area = raw_statistics["total_cluster_area"]
-
-    if not isinstance(cluster_num, int):
-        logger.print("[ERROR] cluster_num must be an integer.")
-        return None
-
-    if not isinstance(max_cluster_area, (int, float)):
-        logger.print("[ERROR] max_cluster_area must be a number.")
-        return None
-
-    if not isinstance(total_cluster_area, (int, float)):
-        logger.print("[ERROR] total_cluster_area must be a number.")
-        return None
-
-    raw_clusters = raw_report.get("hydrophobic_cluster")
-    if not isinstance(raw_clusters, list):
-        logger.print("[ERROR] Missing or invalid hydrophobic_cluster in raw hydrocluster report.")
-        return None
+    raw_statistics = raw_report.get("hydrophobic_cluster_statistics", {})
+    raw_clusters = raw_report.get("hydrophobic_cluster", [])
 
     hydrophobic_clusters: List[Dict[str, Any]] = []
 
-    for cluster_index, raw_cluster in enumerate(raw_clusters):
-        if not isinstance(raw_cluster, dict):
-            logger.print(f"[ERROR] Invalid hydrophobic cluster item at index {cluster_index}.")
-            return None
-
-        if "area" not in raw_cluster:
-            logger.print(f"[ERROR] Missing area in hydrophobic cluster at index {cluster_index}.")
-            return None
-
-        cluster_area = raw_cluster["area"]
-        if not isinstance(cluster_area, (int, float)):
-            logger.print(f"[ERROR] area must be a number in hydrophobic cluster at index {cluster_index}.")
-            return None
-
-        raw_residues = raw_cluster.get("residues")
-        if not isinstance(raw_residues, list):
-            logger.print(f"[ERROR] Missing or invalid residues in hydrophobic cluster at index {cluster_index}.")
-            return None
-
+    for raw_cluster in raw_clusters:
         residues: List[Dict[str, Any]] = []
 
-        for residue_index_in_cluster, raw_residue in enumerate(raw_residues):
-            if not isinstance(raw_residue, dict):
-                logger.print(
-                    f"[ERROR] Invalid residue item at cluster index {cluster_index}, "
-                    f"residue index {residue_index_in_cluster}."
-                )
-                return None
+        for raw_residue in raw_cluster.get("residues", []):
+            residues.append(
+                {
+                    "residue_index": raw_residue.get("aa_id"),
+                    "residue_name": raw_residue.get("aa_name"),
+                }
+            )
 
-            if "aa_id" not in raw_residue:
-                logger.print(
-                    f"[ERROR] Missing aa_id at cluster index {cluster_index}, "
-                    f"residue index {residue_index_in_cluster}."
-                )
-                return None
-
-            if "aa_name" not in raw_residue:
-                logger.print(
-                    f"[ERROR] Missing aa_name at cluster index {cluster_index}, "
-                    f"residue index {residue_index_in_cluster}."
-                )
-                return None
-
-            residue_index_value = raw_residue["aa_id"]
-            residue_name = raw_residue["aa_name"]
-
-            if not isinstance(residue_index_value, int):
-                logger.print(
-                    f"[ERROR] aa_id must be an integer at cluster index {cluster_index}, "
-                    f"residue index {residue_index_in_cluster}."
-                )
-                return None
-
-            if not isinstance(residue_name, str):
-                logger.print(
-                    f"[ERROR] aa_name must be a string at cluster index {cluster_index}, "
-                    f"residue index {residue_index_in_cluster}."
-                )
-                return None
-
-            if len(residue_name) != 1 or residue_name not in "ACDEFGHIKLMNPQRSTVWY":
-                logger.print(
-                    f"[ERROR] aa_name must be a valid one-letter amino acid code at "
-                    f"cluster index {cluster_index}, residue index {residue_index_in_cluster}: {residue_name}"
-                )
-                return None
-
-            residues.append({
-                "residue_index": residue_index_value,
-                "residue_name": residue_name,
-            })
-
-        hydrophobic_clusters.append({
-            "hydrophobic_cluster_area": float(cluster_area),
-            "residues": residues,
-        })
+        hydrophobic_clusters.append(
+            {
+                "hydrophobic_cluster_area": raw_cluster.get("area"),
+                "residues": residues,
+            }
+        )
 
     schema_report: Dict[str, Any] = {
-        "report_type": "enzywizard_hydrocluster",
+        "report_type": raw_report.get("output_type", "enzywizard_hydrocluster"),
         "hydrophobic_cluster_statistics": {
-            "hydrophobic_cluster_count": cluster_num,
-            "max_hydrophobic_cluster_area": float(max_cluster_area),
-            "total_hydrophobic_cluster_area": float(total_cluster_area),
+            "hydrophobic_cluster_count": raw_statistics.get("cluster_num"),
+            "max_hydrophobic_cluster_area": raw_statistics.get("max_cluster_area"),
+            "total_hydrophobic_cluster_area": raw_statistics.get("total_cluster_area"),
         },
         "hydrophobic_clusters": hydrophobic_clusters,
     }

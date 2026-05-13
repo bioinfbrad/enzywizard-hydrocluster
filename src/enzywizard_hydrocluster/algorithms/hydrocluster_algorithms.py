@@ -196,6 +196,5 @@ def generate_hydrocluster_report(clusters: List[Cluster],struct: Structure,logge
     }
 
     return postprocess_hydrocluster_report_to_schema(
-        raw_report=raw_report,
-        logger=logger,
+        raw_report=raw_report
     )
