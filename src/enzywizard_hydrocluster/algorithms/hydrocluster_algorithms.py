@@ -28,9 +28,11 @@ def compute_hydrophobic_clusters(struct: Structure,logger: Logger,cutoff_area: f
         return None
 
     if len(resid_list) == 0:
+        logger.print("[INFO] No ILE, LEU, or VAL residues found; no hydrophobic clusters to report.")
         return []
 
     if len(ilv_atom_list) == 0:
+        logger.print("[INFO] No non-backbone, non-hydrogen ILE/LEU/VAL atoms found; no hydrophobic clusters to report.")
         return []
 
     dims = len(resid_list)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from argparse import Namespace, ArgumentParser
+import sys
 from ..services.hydrocluster_service import run_hydrocluster_service
 
 
@@ -10,5 +11,6 @@ def add_hydrocluster_parser(parser: ArgumentParser) -> None:
     parser.set_defaults(func=run_hydrocluster)
 
 def run_hydrocluster(args: Namespace) -> None:
-    run_hydrocluster_service(input_path=args.input_path, output_dir=args.output_dir, cutoff_area=args.cutoff)
-
+    success = run_hydrocluster_service(input_path=args.input_path, output_dir=args.output_dir, cutoff_area=args.cutoff)
+    if not success:
+        sys.exit(1)

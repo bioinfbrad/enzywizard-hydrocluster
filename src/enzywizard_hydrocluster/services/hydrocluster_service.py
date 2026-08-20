@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from pathlib import Path
 
 from ..utils.logging_utils import Logger
@@ -16,8 +17,8 @@ def run_hydrocluster_service(input_path: str | Path,output_dir: str | Path, cuto
     logger.print(f"[INFO] Hydrocluster processing started: {input_path}")
 
     # ---- check input ----
-    if cutoff_area <= 0:
-        logger.print(f"[ERROR] Invalid cutoff_area: {cutoff_area}. Must be a positive number.")
+    if not math.isfinite(cutoff_area) or cutoff_area <= 0:
+        logger.print(f"[ERROR] Invalid cutoff_area: {cutoff_area}. Must be a finite positive number.")
         return False
 
     input_path = Path(input_path)
@@ -45,6 +46,7 @@ def run_hydrocluster_service(input_path: str | Path,output_dir: str | Path, cuto
 
     #---- check structure ----
     if not check_cleaned_structure(structure, logger):
+        logger.print("[ERROR] Cleaned structure validation failed")
         return False
     logger.print(f"[INFO] Structure checked")
 
@@ -52,11 +54,13 @@ def run_hydrocluster_service(input_path: str | Path,output_dir: str | Path, cuto
     logger.print("[INFO] Hydrophobic cluster calculation started")
     clusters = compute_hydrophobic_clusters(struct=structure,logger=logger,cutoff_area=cutoff_area)
     if clusters is None:
+        logger.print("[ERROR] Hydrophobic cluster calculation failed")
         return False
 
     # ---- generate report ----
     report = generate_hydrocluster_report(clusters=clusters,struct=structure,logger=logger)
     if report is None:
+        logger.print("[ERROR] Failed to generate hydrocluster report")
         return False
 
     # ---- write output ----
