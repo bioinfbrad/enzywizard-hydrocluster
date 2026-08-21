@@ -26,7 +26,7 @@ setup(
     python_requires=">=3.10",
     install_requires=[
         "biopython>=1.86",          # for structure I/O
-        "numpy>=1.23.5",            # numerical backend
+        "numpy>=1.23.5,<2",         # numerical backend
         "scipy>=1.15.2",            # for scientific calculations
         "networkx>=3.4",            # for graph-based clustering
         "packaging",                # version handling (used internally)
